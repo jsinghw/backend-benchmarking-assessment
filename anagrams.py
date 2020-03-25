@@ -12,12 +12,30 @@ import sys
 
 # Your name here, and any other people/sources who helped.
 # Give credit where credit is due.
-__author__ = "???"
+__author__ = "jsingh"
+
+
+def quick_sort(string):
+    less = []
+    equal = []
+    greater = []
+    if len(string) > 1:
+        pivot = string[0]
+        for x in string:
+            if x < pivot:
+                less.append(x)
+            elif x == pivot:
+                equal.append(x)
+            elif x > pivot:
+                greater.append(x)
+        return(quick_sort(less)+equal+quick_sort(greater))
+    else:
+        return(string)
 
 
 def alphabetize(string):
     """Returns alphabetized version of the string"""
-    return "".join(sorted(string.lower()))
+    return "".join(sorted(string))
 
 
 def find_anagrams(words):
@@ -27,11 +45,14 @@ def find_anagrams(words):
     Example:
     {'dgo': ['dog'], 'act': ['cat', 'act']}
     """
-    anagrams = {
-        alphabetize(word): [
-            w for w in words
-            if alphabetize(w) == alphabetize(word)]
-        for word in words}
+
+    anagrams = {}
+    for word in words:
+        key = alphabetize(word)
+        if key in anagrams:
+            anagrams[key].append(word)
+        else:
+            anagrams[key] = [word]
     return anagrams
 
 
